@@ -1,22 +1,29 @@
 """
-URL configuration for core project.
+===========================================================================
+URLS PRINCIPALES DEL PROYECTO (core/urls.py)
+===========================================================================
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/6.0/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+Este archivo define el enrutamiento global del proyecto.
+
+Patrón utilizado: Front Controller (controlador frontal)
+Todas las solicitudes HTTP entran por este archivo y se distribuyen
+a las aplicaciones correspondientes mediante include().
+
+Estructura:
+    - Las rutas de administración van en /admin/
+    - Las rutas de la aplicación 'users' van en la raíz ('')
+      para que landing page sea la página de inicio.
+===========================================================================
 """
+
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 urlpatterns = [
+    # Panel de administración de Django
     path('admin/', admin.site.urls),
+
+    # Incluir todas las rutas de la app 'users' en la raíz del sitio
+    # Esto permite que la landing page esté en '/' y no en '/landing/'
+    path('', include('users.urls')),
 ]

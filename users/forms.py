@@ -1,33 +1,87 @@
-from django.forms import forms
+"""
+===========================================================================
+FORMULARIOS DEL MÓDULO USERS (users/forms.py)
+===========================================================================
+
+Define los formularios utilizados para la gestión de usuarios.
+
+Patrones utilizados:
+    - Formulario de Django (ModelForm y Form)
+    - Validación de datos del lado del servidor
+    - Personalización de widgets y etiquetas
+
+Formularios:
+    - UserRegisterForm: Para el registro de nuevos usuarios.
+===========================================================================
+"""
+
+from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
+
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField(label="", widget=forms.EmailInput(attrs={'placeholder': 'Correo electronico'}))
-    first_name = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': 'Nombre'}))
-    last_name = forms.CharField(label="", widget=forms.TextInput(attrs={'placeholder': 'Apellido'}))
+    """
+    Formulario personalizado para el registro de usuarios.
+
+    Hereda de UserCreationForm (que ya incluye username, password1 y password2).
+    Añade el campo email como obligatorio.
+
+    Validaciones:
+        - Email: campo obligatorio y con formato de correo válido.
+        - Username: validado por UserCreationForm (longitud, caracteres permitidos).
+        - Contraseñas: deben coincidir y cumplir con los validadores configurados.
+
+    Atributos Meta:
+        model: User (modelo de autenticación de Django)
+        fields: campos que se mostrarán en el formulario
+    """
+
+    # Campo email: obligatorio, con placeholder y clases de Bootstrap
+    email = forms.EmailField(
+        required=True,
+        label='Correo electrónico',
+        widget=forms.EmailInput(
+            attrs={
+                'class': 'form-control',
+                'placeholder': 'Correo electrónico'
+            }
+        )
+    )
 
     class Meta:
-        model = User # Traemos el modelo de usuarios dado desde Django
-        fields = ['username', 'email', 'first_name', 'last_name', 'password1', 'password2']
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
 
-    "Patron Creacional: Personalizar dinamica con __init__ "
     def __init__(self, *args, **kwargs):
+        """
+        Constructor del formulario.
+
+        Personaliza los widgets de los campos heredados (username, password1, password2)
+        añadiendo clases de Bootstrap y placeholders.
+        """
         super(UserRegisterForm, self).__init__(*args, **kwargs)
-        self.fields['username'].widget.attrs['class'] = 'form-control' # widget=como se vera el campo en html attrs significa: atributos de HTML adicionales
-        self.fields['username'].widget.attrs['placeholder'] = 'Nombre de usuario' # Buscamos el campo username y agregamos un archivo HTML placeholder
-        self.fields['username'].label=''
-        self.fields['username'].help_text = ('<span class="form-text text-muted">Requerido . 150 caracteres o menos. Letras, digitos y @/ ./ +/-/_ solamente </span>')
 
-        self.fields['password1'].widget.attrs['class'] = 'form-control'
-        self.fields['password1'].widget.attrs['placeholder'] = 'Contraseña'
-        self.fields['password1'].label=''
-        self.fields['password1'].help_text = ('<ul class=""> <li>Tu contraseña no puede ser demasiado similar a tu otra información personal.</li> <li>Tu contraseña debe contener al menos 8 caracteres.</li> <li>Tu contraseña no puede ser una contraseña común.</li> <li>Tu contraseña no puede ser completamente numérica.</li> </ul>')
+        # Personalizar el campo username
+        self.fields['username'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Nombre de usuario'
+        })
+        self.fields['username'].label = 'Nombre de usuario'
 
-        self.fields['password2'].widget.attrs['class'] = 'form-control'
-        self.fields['password2'].widget.attrs['placeholder'] = 'Confirmar contraseña'
-        self.fields['password2'].label=''
-        self.fields['password2'].help_text = ('<span class="form-text"> Las contraseñas deben coincidir </span>')
+        # Personalizar el campo password1
+        self.fields['password1'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Contraseña'
+        })
+        self.fields['password1'].label = 'Contraseña'
 
-            
-            
+        # Personalizar el campo password2
+        self.fields['password2'].widget.attrs.update({
+            'class': 'form-control',
+            'placeholder': 'Confirmar contraseña'
+        })
+        self.fields['password2'].label = 'Confirmar contraseña'
+
+        # Opcional: eliminar las ayudas (help_text) si son muy extensas
+        # self.fields['username'].help_text = None

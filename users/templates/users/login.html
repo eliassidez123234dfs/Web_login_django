@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Iniciar sesión - RED{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-black text-white text-center">
+                <h4 class="mb-0">Iniciar sesión</h4>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'users:iniciar_sesion' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Nombre de usuario</label>
+                        <input type="text" name="username" id="username" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" name="password" id="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-red w-100">Ingresar</button>
+                </form>
+                <div class="mt-3 text-center">
+                    <small>¿No tienes cuenta? <a href="{% url 'users:registrarse' %}" class="text-red">Regístrate aquí</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

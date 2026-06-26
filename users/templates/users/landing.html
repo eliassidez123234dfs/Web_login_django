@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - RED{% endblock %}
+
+{% block content %}
+<div class="row align-items-center py-5">
+    <div class="col-lg-6">
+        <h1 class="display-4 fw-bold text-red">Bienvenido a RED</h1>
+        <p class="lead">La plataforma para gestionar visualizar tus prendas y editarlas a tu gusto.</p>
+        {% if not user.is_authenticated %}
+            <a href="{% url 'users:registrarse' %}" class="btn btn-red btn-lg">Comenzar ahora</a>
+        {% else %}
+            <a href="#" class="btn btn-red btn-lg">Ir al catálogo</a>
+        {% endif %}
+    </div>
+    <div class="col-lg-6">
+        <img src="https://via.placeholder.com/600x400?text=RED" alt="Ilustración" class="img-fluid rounded">
+    </div>
+</div>
+{% endblock %}
