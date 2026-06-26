@@ -6,39 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}RED{% endblock %}</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <style>
-        .bg-red { background-color: #dc3545; }
-        .text-red { color: #dc3545; }
-        .bg-black { background-color: #000000; }
-        .text-white { color: #ffffff; }
-        .btn-red {
-            background-color: #dc3545;
-            border-color: #dc3545;
-            color: #fff;
-        }
-        .btn-red:hover {
-            background-color: #b02a37;
-            border-color: #b02a37;
-        }
-        footer {
-            background-color: #000;
-            color: #fff;
-            padding: 1rem 0;
-            margin-top: 2rem;
-        }
-        footer a { color: #fff; text-decoration: none; }
-        footer a:hover { color: #dc3545; }
-    </style>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
     {% include 'navbar.html' %}
-    <div class="container mt-4">
-        {% include 'messages.html' %}
-        {% block content %}{% endblock %}
-    </div>
+    <main>
+        <div class="container mt-4">
+            {% include 'messages.html' %}
+            {% block content %}{% endblock %}
+        </div>
+    </main>
     {% include 'footer.html' %}
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

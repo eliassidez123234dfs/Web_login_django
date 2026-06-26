@@ -1,5 +1,41 @@
-<footer>
-    <div class="container text-center">
-        <p class="mb-0">&copy; {% now "Y" %} RED - Todos los derechos reservados.</p>
+<footer class="footer-red">
+    <div class="container">
+        <div class="row gy-4">
+            <div class="col-md-5">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="footer-stamp">
+                        <span class="footer-stamp-inner">R<br>ED</span>
+                    </div>
+                    <div>
+                        <span style="font-family: var(--font-display); font-size: 1.4rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blanco-puro); display: block;">RED</span>
+                        <span style="font-size: 0.75rem; color: var(--gris-tinta); letter-spacing: 0.08em; text-transform: uppercase;">Estampados</span>
+                    </div>
+                </div>
+                <p class="footer-red-text" style="max-width: 320px;">
+                    Diseño, estampación y venta de prendas textiles con identidad. Hecho en Bogotá, Colombia.
+                </p>
+            </div>
+            <div class="col-md-3 offset-md-1">
+                <h5 class="footer-red-title">Contacto</h5>
+                <p class="footer-red-text mb-1">contacto@redestampados.com</p>
+                <p class="footer-red-text mb-1">+57 300 123 4567</p>
+                <p class="footer-red-text">Bogotá, Colombia</p>
+            </div>
+            <div class="col-md-3">
+                <h5 class="footer-red-title">Síguenos</h5>
+                <ul class="footer-red-social">
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">TikTok</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr class="footer-red-divider">
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <p class="footer-red-copy mb-0">&copy; {% now "Y" %} RED Estampados. Todos los derechos reservados.</p>
+            <p class="footer-red-copy mb-0">
+                <a href="{% url 'contact:contacto' %}" style="opacity: 1; color: var(--blanco-hueso);">Contáctanos</a>
+            </p>
+        </div>
     </div>
 </footer>

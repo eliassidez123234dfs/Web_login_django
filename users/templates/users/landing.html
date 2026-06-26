@@ -1,20 +1,137 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Inicio - RED{% endblock %}
+{% block title %}Inicio — RED{% endblock %}
 
 {% block content %}
-<div class="row align-items-center py-5">
-    <div class="col-lg-6">
-        <h1 class="display-4 fw-bold text-red">Bienvenido a RED</h1>
-        <p class="lead">La plataforma para gestionar visualizar tus prendas y editarlas a tu gusto.</p>
-        {% if not user.is_authenticated %}
-            <a href="{% url 'users:registrarse' %}" class="btn btn-red btn-lg">Comenzar ahora</a>
-        {% else %}
-            <a href="#" class="btn btn-red btn-lg">Ir al catálogo</a>
-        {% endif %}
+<!-- ==================== HERO ==================== -->
+<section class="hero-red">
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1 class="hero-red-title">
+                    Tu estilo<br><span class="highlight">se estampa</span> aquí
+                </h1>
+                <p class="hero-red-sub">
+                    Diseñamos y estampamos prendas textiles con tu identidad. 
+                    Camisetas, hoodies, tote bags y más — cada pieza cuenta una historia.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="{% url 'products:catalogue' %}" class="btn btn-red btn-lg">Ver catálogo</a>
+                    {% if not user.is_authenticated %}
+                        <a href="{% url 'users:registrarse' %}" class="btn btn-outline-red btn-lg">Crear cuenta</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="hero-stamp" aria-hidden="true">
+            <span class="hero-stamp-text">RED estampados</span>
+        </div>
     </div>
-    <div class="col-lg-6">
-        <img src="https://via.placeholder.com/600x400?text=RED" alt="Ilustración" class="img-fluid rounded">
+</section>
+
+<!-- ==================== SERVICIOS ==================== -->
+<section class="section-red">
+    <div class="container">
+        <h2 class="section-red-title text-center">Servicios</h2>
+        <p class="section-red-sub text-center">
+            De la idea a tu prenda favorita. Te acompañamos en cada paso.
+        </p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="service-icon-card">
+                    <div class="service-icon">✧</div>
+                    <h3>Diseño personalizado</h3>
+                    <p>Creamos ilustraciones y gráficos digitales únicos para tu marca, evento o idea. Trabajamos contigo hasta dar con el diseño perfecto.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service-icon-card">
+                    <div class="service-icon">⎔</div>
+                    <h3>Estampación textil</h3>
+                    <p>Serigrafía, vinilo textil y sublimación sobre algodón, poliéster y mezclas. Acabados profesionales que duran lavado tras lavado.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="service-icon-card">
+                    <div class="service-icon">⌵</div>
+                    <h3>Venta de prendas</h3>
+                    <p>Camisetas, hoodies, tote bags, gorras y más. Stock permanente en tallas XS a 3XL con proveedores de comercio justo.</p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>
+
+<!-- ==================== PROCESO ==================== -->
+<section class="section-red-alt">
+    <div class="container">
+        <h2 class="section-red-title text-center">Cómo funciona</h2>
+        <p class="section-red-sub text-center">
+            Tres pasos simples para tener tu prenda estampada.
+        </p>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+                <div class="process-step">
+                    <div class="process-step-num">01</div>
+                    <h4>Elige o diseña</h4>
+                    <p>Explora nuestro catálogo o envíanos tu propio diseño. Te asesoramos sin costo.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="process-step">
+                    <div class="process-step-num">02</div>
+                    <h4>Estampamos</h4>
+                    <p>Producimos tu pedido en nuestros talleres con materiales de primera calidad.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="process-step">
+                    <div class="process-step-num">03</div>
+                    <h4>Recibe y luce</h4>
+                    <p>Te enviamos tu prenda a donde estés. Empaque ecológico y entrega rápida.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CONTACTO CTA ==================== -->
+<section class="cta-red">
+    <div class="container">
+        <h2>¿Listo para estampar tu idea?</h2>
+        <p>Cuéntanos qué necesitas y te daremos una cotización personalizada en 24 horas.</p>
+        <a href="{% url 'contact:contacto' %}" class="btn btn-lg btn-outline-light">Contáctanos</a>
+    </div>
+</section>
+
+<!-- ==================== VALORES ==================== -->
+<section class="section-red">
+    <div class="container">
+        <h2 class="section-red-title text-center">Hecho para durar</h2>
+        <p class="section-red-sub text-center">
+            Materiales premium, tintas de alta calidad y procesos que cuidan el planeta.
+        </p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="product-card p-4 text-center h-100">
+                    <h3 class="font-display fs-5 mb-3">CALIDAD</h3>
+                    <p class="text-muted small">Tintas ecológicas y procesos controlados para un acabado impecable.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="product-card p-4 text-center h-100">
+                    <h3 class="font-display fs-5 mb-3">SOSTENIBILIDAD</h3>
+                    <p class="text-muted small">Prendas de comercio justo, empaques biodegradables y producción local.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="product-card p-4 text-center h-100">
+                    <h3 class="font-display fs-5 mb-3">GARANTÍA</h3>
+                    <p class="text-muted small">Si no te gusta el resultado, lo repetimos sin costo. Así de simple.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
