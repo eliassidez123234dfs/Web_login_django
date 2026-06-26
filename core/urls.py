@@ -18,6 +18,8 @@ Estructura:
 
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # Panel de administración de Django
@@ -26,4 +28,14 @@ urlpatterns = [
     # Incluir todas las rutas de la app 'users' en la raíz del sitio
     # Esto permite que la landing page esté en '/' y no en '/landing/'
     path('', include('users.urls')),
+
+    # Rutas de productos (catálogo, detalle, CRUD admin)
+    path('products/', include('products.urls')),
+
+    # Rutas de contacto
+    path('contact/', include('contact.urls')),
 ]
+
+# Servir archivos media en desarrollo
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

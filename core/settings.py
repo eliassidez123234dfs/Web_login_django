@@ -47,6 +47,8 @@ DJANGO_APPS = [
 PROJECT_APPS = [
     # 'bootstrap5',   # <-- Eliminado para evitar incompatibilidad con Django 6.0
     'users',          # Tu aplicación de usuarios
+    'products',       # Catálogo y gestión de productos
+    'contact',        # Formulario y bandeja de contacto
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
