@@ -17,8 +17,14 @@ Formularios:
 
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.core.validators import RegexValidator
 from django.contrib.auth.models import User
 
+# Validador mediante expresión regular (Regex)
+email_regex = RegexValidator(
+    regex=r'^[\w\.-]+@[\w\.-]+\.\w+$',
+    message='Ingrese un correo electrónico válido.'
+)
 
 class UserRegisterForm(UserCreationForm):
     """
@@ -41,6 +47,7 @@ class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(
         required=True,
         label='Correo electrónico',
+        validators=[email_regex],
         widget=forms.EmailInput(
             attrs={
                 'class': 'form-control',
