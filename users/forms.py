@@ -37,7 +37,7 @@ class UserRegisterForm(UserCreationForm):
         - Email: campo obligatorio y con formato de correo válido.
         - Username: validado por UserCreationForm (longitud, caracteres permitidos).
         - Contraseñas: deben coincidir y cumplir con los validadores configurados.
-
+s
     Atributos Meta:
         model: User (modelo de autenticación de Django)
         fields: campos que se mostrarán en el formulario
