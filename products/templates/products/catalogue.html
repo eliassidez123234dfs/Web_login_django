@@ -7,6 +7,24 @@
 <div class="container py-4">
     <h1 class="page-title-red">Catálogo</h1>
 
+    <form method="GET" class="search-form mb-4">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Buscar productos por nombre…" value="{{ query }}">
+            <button class="btn btn-search" type="submit">Buscar</button>
+        </div>
+    </form>
+
+    {% if query %}
+        <p class="mb-4 text-muted">
+            {% if productos %}
+                {{ productos|length }} resultado(s) para "{{ query }}"
+            {% else %}
+                No encontramos productos para "{{ query }}"
+            {% endif %}
+            <a href="{% url 'products:catalogue' %}" class="ms-2" style="font-size: 0.85rem;">Limpiar filtro</a>
+        </p>
+    {% endif %}
+
     {% if productos %}
         <div class="row g-4">
             {% for producto in productos %}
@@ -17,7 +35,13 @@
         </div>
     {% else %}
         <div class="text-center py-5">
-            <p class="text-muted mb-0">No hay productos disponibles en este momento.</p>
+            <p class="text-muted mb-0">
+                {% if query %}
+                    No hay productos que coincidan con tu búsqueda.
+                {% else %}
+                    No hay productos disponibles en este momento.
+                {% endif %}
+            </p>
         </div>
     {% endif %}
 </div>

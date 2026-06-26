@@ -4,8 +4,11 @@ from .models import Producto
 
 
 def catalogue(request):
+    query = request.GET.get('q', '')
     productos = Producto.objects.filter(disponible=True)
-    return render(request, 'products/catalogue.html', {'productos': productos})
+    if query:
+        productos = productos.filter(nombre__icontains=query)
+    return render(request, 'products/catalogue.html', {'productos': productos, 'query': query})
 
 
 def detail(request, pk):
