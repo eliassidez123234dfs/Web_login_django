@@ -1,0 +1,41 @@
+@startuml
+title "Actividad: Formulario de Contacto"
+
+|Visitante|
+start
+:Acceder a /contact/;
+|Navegador|
+:Mostrar formulario\n(nombre, correo,\nasunto, mensaje);
+|Visitante|
+:Completar campos;
+|Visitante|
+:Hacer clic en Enviar;
+|Navegador|
+:Enviar POST /contact/;
+
+|Django - URL Router|
+:Recibir solicitud;
+:Despachar a vista\ncontacto();
+
+|Django - Vista|
+if (Método HTTP?) then (POST)
+  :Crear formulario\ncon datos POST;
+  if (Validación?) then (Válido)
+    :Guardar en BD\nINSERT INTO contact_contacto;
+    :Redirigir con\nmensaje de éxito;
+    |Navegador|
+    :Mostrar confirmación;
+    stop
+  else (Inválido)
+    |Navegador|
+    :Mostrar errores\ndel formulario;
+    stop
+  endif
+else (GET)
+  :Mostrar formulario\nvacío;
+  |Navegador|
+  :Renderizar\ncontacto.html;
+  stop
+endif
+
+@enduml

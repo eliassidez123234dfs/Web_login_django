@@ -1,0 +1,58 @@
+@startuml
+skinparam componentStyle rectangle
+
+title "Patrón Front Controller\nSistema de Rutas (URL Dispatcher)"
+
+component "HTTP Request\n/users/register/" as Req1
+component "HTTP Request\n/products/" as Req2
+component "HTTP Request\n/contact/" as Req3
+component "HTTP Request\n/admin/" as Req4
+
+package "Front Controller\ncore/urls.py" as FC {
+  component "path('',\ninclude('users.urls'))" as R1
+  component "path('products/',\ninclude('products.urls'))" as R2
+  component "path('contact/',\ninclude('contact.urls'))" as R3
+  component "path('admin/',\nadmin.site.urls)" as R4
+}
+
+package "Router: users/urls.py" as RU {
+  component "'' -> landing()" as RU1
+  component "'login/' -> iniciar_sesion()" as RU2
+  component "'register/' -> registrarse()" as RU3
+  component "'logout/' -> cerrar_sesion()" as RU4
+}
+
+package "Router: products/urls.py" as RP {
+  component "'' -> catalogue()" as RP1
+  component "'<int:pk>/' -> detail()" as RP2
+  component "'admin/' -> admin_panel()" as RP3
+  component "'admin/crear/' -> create()" as RP4
+  component "'admin/<pk>/editar/' -> update()" as RP5
+  component "'admin/<pk>/eliminar/' -> delete()" as RP6
+}
+
+package "Router: contact/urls.py" as RC {
+  component "'' -> contacto()" as RC1
+}
+
+Req1 --> FC : GET /users/register/
+FC --> R1 : Coincide con\n'users/'
+R1 --> RU : include()
+RU --> RU3 : path('register/')\n-> registrarse()
+
+Req2 --> FC : GET /products/
+FC --> R2 : Coincide con\n'products/'
+R2 --> RP : include()
+RP --> RP1 : path('')\n-> catalogue()
+
+Req3 --> FC : GET /contact/
+FC --> R3 : Coincide con\n'contact/'
+R3 --> RC : include()
+RC --> RC1 : path('')\n-> contacto()
+
+Req4 --> FC : GET /admin/
+FC --> R4 : path('admin/')\n-> admin.site.urls
+
+note bottom of FC : "Único punto de entrada\npara todas las solicitudes\n(Estructura core/urls.py)"
+
+@enduml

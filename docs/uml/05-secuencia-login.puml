@@ -1,0 +1,44 @@
+@startuml
+title "Secuencia: Inicio de Sesión"
+
+actor "Usuario" as U
+participant "Navegador" as N
+participant "URL Router" as R
+participant "Vista\niniciar_sesion()" as VW
+participant "authenticate()" as AUTH
+participant "login()" as LOGIN
+participant "Modelo\nUser" as M
+participant "DB\nSQLite" as DB
+
+U -> N: GET /login/
+N -> R: HTTP Request
+R -> VW: dispatch()
+VW --> N: render(login.html)
+N --> U: Mostrar formulario
+
+U -> N: POST /login/\n(username, password)
+N -> R: HTTP Request
+R -> VW: dispatch()
+
+VW -> AUTH: authenticate(\n  request,\n  username,\n  password)
+AUTH -> M: get(username=...)
+M -> DB: SELECT * FROM auth_user
+DB --> M: User object
+M --> AUTH: User (con pass hash)
+AUTH -> AUTH: check_password(password)
+alt Credenciales correctas
+  AUTH --> VW: User autenticado
+  VW -> LOGIN: login(request, user)
+  LOGIN -> LOGIN: Crear sesión\n(guardar sessionid)
+  LOGIN --> VW: Sesión iniciada
+  VW -> VW: messages.success()
+  VW --> N: redirect('users:landing')
+  N --> U: Página principal
+else Credenciales incorrectas
+  AUTH --> VW: None
+  VW -> VW: messages.error()
+  VW --> N: render(login.html)
+  N --> U: Mensaje de error
+end
+
+@enduml

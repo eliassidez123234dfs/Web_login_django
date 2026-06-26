@@ -1,0 +1,70 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class User {
+  - id: Integer
+  - username: String
+  - email: String
+  - password: String
+  - first_name: String
+  - last_name: String
+  - is_staff: Boolean
+  - is_active: Boolean
+  - date_joined: DateTime
+  ..
+  + __str__(): String
+}
+
+class Producto {
+  - id: Integer
+  - nombre: String
+  - descripcion: Text
+  - precio: Decimal
+  - imagen: ImageField
+  - disponible: Boolean
+  - created_at: DateTime
+  - updated_at: DateTime
+  ..
+  + __str__(): String
+}
+
+class Contacto {
+  - id: Integer
+  - nombre: String
+  - correo: String
+  - asunto: String
+  - mensaje: Text
+  - fecha_envio: DateTime
+  ..
+  + __str__(): String
+}
+
+class UserRegisterForm {
+  - email: EmailField
+  ..
+  + save(): User
+}
+
+class ProductoForm {
+  ..
+  + save(): Producto
+}
+
+class UserCreationForm {
+  + username: String
+  + password1: String
+  + password2: String
+}
+
+UserRegisterForm --|> UserCreationForm : extends
+UserRegisterForm --> User : creates
+
+ProductoForm --> Producto : creates/manages
+
+note "Modelo User de\ndjango.contrib.auth" as N1
+N1 .. User
+
+note "Modelo no implementado\naún en contact/models.py" as N2
+N2 .. Contacto
+
+@enduml

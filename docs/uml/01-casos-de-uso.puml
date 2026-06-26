@@ -1,0 +1,42 @@
+@startuml
+left to right direction
+actor "Visitante" as V
+actor "Usuario\nRegistrado" as U
+actor "Administrador" as A
+
+rectangle "Sistema RED" {
+  usecase "UC-01\nRegistrarse" as UC01
+  usecase "UC-02\nIniciar sesión" as UC02
+  usecase "UC-03\nCerrar sesión" as UC03
+  usecase "UC-04\nVer catálogo" as UC04
+  usecase "UC-05\nVer detalle\nproducto" as UC05
+  usecase "UC-06\nBuscar productos" as UC06
+  usecase "UC-07\nEnviar mensaje\ncontacto" as UC07
+  usecase "UC-08\nCrear producto" as UC08
+  usecase "UC-09\nEditar producto" as UC09
+  usecase "UC-10\nEliminar producto" as UC10
+  usecase "UC-11\nListar productos" as UC11
+  usecase "UC-12\nGestionar\nusuarios" as UC12
+}
+
+V --> UC01
+V --> UC02
+V --> UC04
+V --> UC05
+V --> UC06
+V --> UC07
+
+U --> UC02
+U --> UC03
+U --> UC04
+U --> UC05
+U --> UC06
+U --> UC07
+
+A --> UC08
+A --> UC09
+A --> UC10
+A --> UC11
+A --> UC12
+A --> UC03
+@enduml

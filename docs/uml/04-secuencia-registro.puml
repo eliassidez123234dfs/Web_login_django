@@ -1,0 +1,41 @@
+@startuml
+title "Secuencia: Registro de Usuario"
+
+actor "Visitante" as V
+participant "Navegador" as N
+participant "URL Router\nurls.py" as R
+participant "Vista\nregistrarse()" as VW
+participant "Formulario\nUserRegisterForm" as F
+participant "Modelo\nUser" as M
+participant "DB\nSQLite" as DB
+
+V -> N: GET /register/
+N -> R: HTTP Request
+R -> VW: dispatch()
+VW -> F: UserRegisterForm()
+F --> VW: form vacío
+VW --> N: render(register.html, form)
+N --> V: Mostrar formulario
+
+V -> N: POST /register/\n(username, email, pass)
+N -> R: HTTP Request
+R -> VW: dispatch()
+VW -> F: UserRegisterForm(request.POST)
+F -> F: is_valid()\n- Validar campos\n- Validar email\n- Coincidencia pass
+alt Formulario válido
+  F -> M: save()\n(username, email, password)
+  M -> DB: INSERT INTO auth_user
+  DB --> M: OK
+  M --> F: User creado
+  F --> VW: Usuario guardado
+  VW -> VW: messages.success()
+  VW --> N: redirect('users:login')
+  N --> V: Mostrar login + mensaje
+else Formulario inválido
+  F --> VW: form con errores
+  VW -> VW: messages.warning()
+  VW --> N: render(register.html, form)
+  N --> V: Mostrar errores
+end
+
+@enduml

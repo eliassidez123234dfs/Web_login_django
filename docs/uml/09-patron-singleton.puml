@@ -1,0 +1,60 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+title "Patrón Singleton\nConfiguración de Django (settings)"
+
+class Settings {
+  - _instance: Settings
+  - DEBUG: Boolean
+  - SECRET_KEY: String
+  - ALLOWED_HOSTS: List
+  - INSTALLED_APPS: List
+  - DATABASES: Dict
+  - MEDIA_URL: String
+  - MEDIA_ROOT: String
+  - STATIC_URL: String
+  - STATICFILES_DIRS: List
+  - LOGIN_URL: String
+  ..
+  + {static} get_instance() : Settings
+  + getattr(name): any
+}
+
+class "django.conf" as DjangoConf {
+  + {static} settings: Settings
+}
+
+class "core.settings" as CoreSettings {
+  + DEBUG = True
+  + INSTALLED_APPS = [...]
+  + DATABASES = {...}
+  + MEDIA_URL = '/media/'
+  + STATICFILES_DIRS = [...]
+}
+
+class "App 1\nusers" as App1 {
+  + from django.conf import settings
+  + settings.DEBUG
+}
+
+class "App 2\nproducts" as App2 {
+  + from django.conf import settings
+  + settings.MEDIA_URL
+}
+
+class "App 3\ncontact" as App3 {
+  + from django.conf import settings
+  + settings.EMAIL_BACKEND
+}
+
+DjangoConf --> Settings : acceso global
+CoreSettings ..|> Settings : define valores
+Settings --> App1 : única instancia
+Settings --> App2 : única instancia
+Settings --> App3 : única instancia
+
+note top of Settings : "Singleton: única instancia\nen toda la aplicación\nLazy loading al iniciar Django"
+
+note bottom of CoreSettings : "Archivo core/settings.py\nValores concretos\ndel proyecto RED"
+
+@enduml

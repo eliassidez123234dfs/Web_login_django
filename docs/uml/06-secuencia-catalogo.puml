@@ -1,0 +1,29 @@
+@startuml
+title "Secuencia: Catálogo de Productos"
+
+actor "Visitante" as V
+participant "Navegador" as N
+participant "URL Router" as R
+participant "Vista\ncatalogue()" as VW
+participant "Modelo\nProducto" as M
+participant "DB\nSQLite" as DB
+
+V -> N: GET /products/\n(opcional: ?q=busqueda)
+N -> R: HTTP Request
+R -> VW: dispatch()
+
+alt Con búsqueda
+  VW -> VW: query = request.GET.get('q')
+  VW -> M: filter(\n  disponible=True,\n  nombre__icontains=query)
+else Sin búsqueda
+  VW -> M: filter(disponible=True)
+end
+
+M -> DB: SELECT * FROM products_producto\nWHERE disponible=1
+DB --> M: ResultSet
+M --> VW: QuerySet<Producto>
+
+VW --> N: render(catalogue.html,\n  {'productos': productos,\n   'query': query})
+N --> V: Mostrar catálogo\n(tarjetas de productos)
+
+@enduml
