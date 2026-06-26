@@ -23,7 +23,7 @@ DEBUG = env.bool('DEBUG', default=False)
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 # Application definition
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -31,6 +31,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+PROJECT_IMPLEMEMTATION = [
+    'users',
+]
+
+INSTALLED_APPS = DJANGO_APPS + PROJECT_IMPLEMEMTATION
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
