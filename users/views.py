@@ -112,7 +112,7 @@ def registrarse(request):
                     "La cuenta fue creada correctamente."
                 )
 
-                return redirect("iniciar_sesion")
+                return redirect("users:iniciar_sesion")
 
             except Exception:
 
@@ -189,7 +189,7 @@ def iniciar_sesion(request):
                 "Bienvenido al sistema."
             )
 
-            return redirect("landing")
+            return redirect("users:landing")
 
         else:
 
@@ -233,5 +233,5 @@ def cerrar_sesion(request):
         "La sesión fue cerrada correctamente."
     )
 
-    return redirect("landing")
+    return redirect("users:landing")
 
