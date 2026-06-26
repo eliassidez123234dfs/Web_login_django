@@ -1,53 +1,66 @@
 @startuml
 skinparam classAttributeIconSize 0
 
-title "Patrón Template Method\nVistas Basadas en Clases (CBV) de Django"
+title "Patrón Template Method - CBV Django"
 
 abstract class View {
-  + dispatch(request, *args, **kwargs)
-  #{abstract} get(request, *args, **kwargs)
-  #{abstract} post(request, *args, **kwargs)
+  + dispatch()
+  + get()
+  + post()
 }
 
 abstract class TemplateView {
-  - template_name: String
-  + get(request, *args, **kwargs)
-  #{abstract} get_context_data(**kwargs)
+  - template_name : String
+  + get()
+  + get_context_data()
 }
 
 abstract class FormView {
-  - form_class: Form
-  - template_name: String
-  - success_url: String
-  + get(request, *args, **kwargs)
-  + post(request, *args, **kwargs)
-  #{abstract} form_valid(form)
-  #{abstract} form_invalid(form)
+  - form_class : Form
+  - template_name : String
+  - success_url : String
+
+  + get()
+  + post()
+  + form_valid()
+  + form_invalid()
 }
 
-class "VistaRegistro\n(UserRegisterForm)" as RegView {
-  + get(request)
-  + post(request)
-  - form_valid(form)
-  - form_invalid(form)
+class RegView {
+  + get()
+  + post()
+  + form_valid()
+  + form_invalid()
 }
 
-class "LoginView" as LogView {
-  + get(request)
-  + post(request)
-  - form_valid(form)
-  - form_invalid(form)
+class LoginView {
+  + get()
+  + post()
+  + form_valid()
+  + form_invalid()
 }
+
+class LandingView
 
 View <|-- TemplateView
 View <|-- FormView
 
-TemplateView <|-- "LandingView\n(TemplateView)" : "plantilla fija"
-FormView <|-- RegView : "registro"
-FormView <|-- LogView : "login"
+TemplateView <|-- LandingView
+FormView <|-- RegView
+FormView <|-- LoginView
 
-note top of View : Template Method\ndispatch() define el\nesqueleto del algoritmo\n-> get() o post() según HTTP
+note top of View
+Template Method
+dispatch() controla
+el flujo de ejecución.
+end note
 
-note bottom of RegView : El formulario inválido\ndevuelve errores al usuario\nEl formulario válido\nredirige al login
+note bottom of RegView
+Si el formulario es válido
+redirige al login.
+
+Si es inválido
+muestra errores.
+end note
 
 @enduml
