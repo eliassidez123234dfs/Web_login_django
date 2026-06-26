@@ -12,10 +12,12 @@
 <body>
     {% include 'navbar.html' %}
     <main>
-        <div class="container mt-4">
-            {% include 'messages.html' %}
-            {% block content %}{% endblock %}
-        </div>
+        {% block messages_wrapper %}
+            <div class="container mt-4">
+                {% include 'messages.html' %}
+            </div>
+        {% endblock %}
+        {% block content %}{% endblock %}
     </main>
     {% include 'footer.html' %}
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
