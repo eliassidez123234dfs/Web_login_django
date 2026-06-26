@@ -1,10 +1,24 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Catálogo — RED{% endblock %}
 
 {% block content %}
 <div class="container py-4">
     <h1 class="page-title-red">Catálogo</h1>
-    <p class="text-muted">Próximamente: productos disponibles.</p>
+
+    {% if productos %}
+        <div class="row g-4">
+            {% for producto in productos %}
+                <div class="col-sm-6 col-lg-4 col-xl-3">
+                    {% include 'components/card_product.html' %}
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <p class="text-muted mb-0">No hay productos disponibles en este momento.</p>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
