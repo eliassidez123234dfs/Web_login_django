@@ -82,7 +82,7 @@ CSRF_COOKIE_SECURE = not DEBUG
 
 # --- HSTS (HTTP Strict Transport Security) ---
 # Obliga a los navegadores a usar siempre HTTPS durante el tiempo indicado (en segundos)
-# 31536000 segundos = 1 año (recomendado)
+# 31536000 segundos = 1 año (esta es una recomendacion)
 SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0
 # Incluir subdominios en la política HSTS
 SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
@@ -227,15 +227,28 @@ if not DEBUG:
     # Puedes descomentar y configurar:
     # DATABASES['default'] = env.db('DATABASE_URL')
 
-    # Configuración de correo para errores (opcional)
-    # ADMINS = [('Admin', 'admin@dominio.com')]
-    # SERVER_EMAIL = 'server@dominio.com'
-    # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-    # EMAIL_HOST = env('EMAIL_HOST')
-    # EMAIL_PORT = env.int('EMAIL_PORT')
-    # EMAIL_USE_TLS = True
-    # EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-    # EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+    # Configuración de correo para producción (SMTP)
+    # Define EMAIL_HOST, EMAIL_PORT, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD en .env
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = env('EMAIL_HOST', default='')
+    EMAIL_PORT = env.int('EMAIL_PORT', default=587)
+    EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS', default=True)
+    EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='')
+    EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
 
     # Cabeceras de seguridad adicionales
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# ===========================================================================
+# 14. CONFIGURACIÓN DE CORREO PARA EL FORMULARIO DE CONTACTO
+# ===========================================================================
+
+# Backend de correo (por defecto imprime en consola para desarrollo)
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Dirección desde la que se envían los correos
+DEFAULT_FROM_EMAIL = 'noreply@red.com'
+
+# Dirección que recibe las notificaciones del formulario de contacto
+CONTACT_EMAIL = env('CONTACT_EMAIL', default='admin@red.com')

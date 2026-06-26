@@ -1,5 +1,8 @@
 @startuml
 skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+title "Modelo de dominio - Sistema RED"
 
 class User {
   - id: Integer
@@ -11,7 +14,7 @@ class User {
   - is_staff: Boolean
   - is_active: Boolean
   - date_joined: DateTime
-  ..
+
   + __str__(): String
 }
 
@@ -24,7 +27,7 @@ class Producto {
   - disponible: Boolean
   - created_at: DateTime
   - updated_at: DateTime
-  ..
+
   + __str__(): String
 }
 
@@ -35,36 +38,44 @@ class Contacto {
   - asunto: String
   - mensaje: Text
   - fecha_envio: DateTime
-  ..
+
   + __str__(): String
 }
 
 class UserRegisterForm {
   - email: EmailField
-  ..
+
   + save(): User
 }
 
 class ProductoForm {
-  ..
   + save(): Producto
 }
 
-class UserCreationForm {
-  + username: String
-  + password1: String
-  + password2: String
+class ContactForm {
+  + save(): Contacto
 }
 
-UserRegisterForm --|> UserCreationForm : extends
-UserRegisterForm --> User : creates
+class ProductoAdmin {
+  + listar()
+  + crear()
+  + editar()
+  + eliminar()
+}
 
-ProductoForm --> Producto : creates/manages
+UserRegisterForm --> User : crea
+ProductoForm --> Producto : crea/actualiza
+ContactForm --> Contacto : crea
+ProductoAdmin ..> Producto : gestiona
 
-note "Modelo User de\ndjango.contrib.auth" as N1
-N1 .. User
+note right of User
+Modelo base de Django
+para autenticación.
+end note
 
-note "Modelo no implementado\naún en contact/models.py" as N2
-N2 .. Contacto
+note bottom of Contacto
+Registra los mensajes
+de los visitantes.
+end note
 
 @enduml

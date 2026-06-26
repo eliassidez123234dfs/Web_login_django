@@ -1,8 +1,42 @@
+"""
+===========================================================================
+FORMULARIOS DEL MÓDULO PRODUCTS (products/forms.py)
+===========================================================================
+
+Define los formularios utilizados para la gestión de productos.
+
+Patrones utilizados:
+    - ModelForm de Django
+    - Validación de datos del lado del servidor
+    - Personalización de widgets y etiquetas
+
+Formularios:
+    - ProductoForm: Para la creación y edición de productos.
+===========================================================================
+"""
+
 from django import forms
 from .models import Producto
 
 
 class ProductoForm(forms.ModelForm):
+    """
+    -----------------------------------------------------------------------
+    Formulario: ProductoForm
+
+    Función
+        Formulario basado en el modelo Producto para crear y editar
+        productos desde el panel de administración.
+
+    Meta
+        model  : Producto
+        fields : nombre, descripcion, precio, imagen, disponible
+
+    Widgets personalizados
+        - TextInput, Textarea, NumberInput, FileInput, CheckboxInput
+        - Clases Bootstrap (form-control, form-check-input)
+    -----------------------------------------------------------------------
+    """
     class Meta:
         model = Producto
         fields = ['nombre', 'descripcion', 'precio', 'imagen', 'disponible']

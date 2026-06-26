@@ -1,32 +1,59 @@
 @startuml
 skinparam packageStyle rectangle
 
-title "Patrón Arquitectónico MVT (Model - View - Template)"
+title "Arquitectura MVT - Proyecto RED"
 
-package "Navegador Web" as Browser {
-  component "HTML + CSS\n+ Bootstrap" as UI
+actor Usuario
+actor Administrador
+
+package "Cliente" {
+  component "Navegador Web" as Browser
+  component "HTML + CSS\nBootstrap" as Frontend
 }
 
-package "Django" {
-  component "URL Router\n(Front Controller)" as Router
-  component "View\n(Controlador)" as View
-  component "Template\n(Presentación)" as Template
-  component "Model\n(Datos)" as Model
+package "Servidor Django" {
+
+  package "Aplicaciones" {
+    component "users" as UsersApp
+    component "products" as ProductsApp
+    component "contact" as ContactApp
+  }
+
+  component "URLs\n(Front Controller)" as Router
+  component "Views" as Views
+  component "Forms" as Forms
+  component "Models" as Models
+  component "Templates" as Templates
+
 }
 
 database "SQLite" as DB
 
-UI --> Router : "HTTP Request\n(GET/POST)"
-Router --> View : "Dispatcher\nrequest"
-View --> Model : "ORM\nQuery"
-Model --> DB : "SQL"
-DB --> Model : "ResultSet"
-Model --> View : "Objectos\nPython"
-View --> Template : "Contexto\n(dict)"
-Template --> UI : "HTTP Response\n(HTML renderizado)"
+Usuario --> Browser
+Administrador --> Browser
 
-note bottom of Model : Representa las tablas\nde la base de datos
-note bottom of View : Contiene la lógica\nde negocio
-note bottom of Template : Renderiza la interfaz\nvisual
+Browser --> Router : HTTP Request
+Router --> Views : dispatch()
+Views --> Forms : valida datos
+Views --> Models : consulta/guarda
+Models --> DB : ORM
+DB --> Models : resultados
+Views --> Templates : contexto
+Templates --> Browser : HTML renderizado
+
+note bottom of Models
+Representa las tablas
+de la base de datos.
+end note
+
+note bottom of Views
+Contiene la lógica
+de negocio.
+end note
+
+note bottom of Templates
+Renderiza la interfaz
+visual al usuario.
+end note
 
 @enduml

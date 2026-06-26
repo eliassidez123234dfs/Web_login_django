@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} {{ titulo }} — RED{% endblock %}
+{% block title %}{{ titulo }} Actualizar apartado de contacto — RED{% endblock %}
 
 {% block content %}
 <div class="container py-4">
@@ -10,8 +10,9 @@
                 <div class="form-header">
                     <h4>{{ titulo }}</h4>
                 </div>
+                
                 <div class="card-body">
-                    <form method="post" enctype="multipart/form-data">
+                    <form method="post">
                         {% csrf_token %}
                         {% for field in form %}
                             <div class="mb-3">
@@ -34,7 +35,7 @@
                         {% endfor %}
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-red">Guardar</button>
-                            <a href="{% url 'products:admin_panel' %}" class="btn btn-outline-red">Cancelar</a>
+                            <a href="{% url 'contact:admin_panel' %}" class="btn btn-outline-red">Cancelar</a>
                         </div>
                     </form>
                 </div>

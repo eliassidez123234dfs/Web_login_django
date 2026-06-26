@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Administracion de contactos — RED{% endblock %}
+
+{% block content %}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="page-title-red mb-0">Contacto</h1>
+        <a href="{% url 'contact:contact_create' %}" class="btn btn-red">+ Nuevo contacto</a>
+    </div>
+
+    {% if contacto %}
+        <div class="table-responsive">
+            <table class="table table-red">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Asunto</th>
+                        <th>Mensaje</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contacto in contacto %}
+                        <tr>
+                            <td>{{ contacto.nombre }}</td>
+                            <td>${{ contacto.correo }}</td>
+                            <td>
+                                {% if producto.disponible %}
+                                    <span class="badge bg-success">Sí</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">No</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ contacto.created_at|date:"d/m/Y" }}</td>
+                            <td class="d-flex gap-2">
+                                <a href="{% url 'contact:contact_update' contacto.id %}" class="btn-action-edit">Editar</a>
+                                <a href="{% url 'contact:contact_delete' contacto.id %}" class="btn-action-delete">Eliminar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="text-center py-5">
+            <p class="text-muted mb-3">No hay productos registrados.</p>
+            <a href="{% url 'contact:contact_create' %}" class="btn btn-outline-red">Crear primer contacto</a>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}
